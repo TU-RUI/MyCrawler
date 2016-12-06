@@ -7,7 +7,7 @@ import java.util.Map;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.http.NameValuePair;
 
-import cn.wanghaomiao.seimi.http.HttpMethod;
+import com.http.HttpMethod;
 
 public class Request implements Serializable{;
     
@@ -26,6 +26,71 @@ public class Request implements Serializable{;
     private int curReqCount;
     
     
+    public String getUrl() {
+        return url;
+    }
+
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
+
+
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
+    }
+
+
+    public Map<String, String> getParams() {
+        return params;
+    }
+
+
+    public void setParams(Map<String, String> params) {
+        this.params = params;
+    }
+
+
+    public List<NameValuePair> getPair() {
+        return pair;
+    }
+
+
+    public void setPair(List<NameValuePair> pair) {
+        this.pair = pair;
+    }
+
+
+    public int getMaxReqCount() {
+        return maxReqCount;
+    }
+
+
+    public void setMaxReqCount(int maxReqCount) {
+        this.maxReqCount = maxReqCount;
+    }
+
+
+    public int getCurReqCount() {
+        return curReqCount;
+    }
+
+
+    public void setCurReqCount(int curReqCount) {
+        this.curReqCount = curReqCount;
+    }
+
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
