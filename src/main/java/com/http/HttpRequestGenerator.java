@@ -4,7 +4,7 @@ import org.apache.http.client.methods.RequestBuilder;
 
 import com.entity.Request;
 
-public class RequestGenerator {
+public class HttpRequestGenerator {
 
     //
     public static RequestBuilder build(Request request){

@@ -5,6 +5,7 @@ import com.entity.Response;
 import com.handler.Handler;
 import com.http.HttpDownLoader;
 import com.queues.RedisQueue;
+import com.queues.RequestProducer;
 
 public class CrawlerProcess implements Runnable{
     private Crawler crawler;
@@ -23,7 +24,7 @@ public class CrawlerProcess implements Runnable{
         while(true){
             Request request = null;
             try {
-                request = queue.bPop();
+                request = RequestProducer.getInstance().getRequest();
                 if(request == null){
                     continue;
                 }

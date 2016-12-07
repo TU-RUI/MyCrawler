@@ -22,7 +22,7 @@ public class HttpDownLoader {
     
     public Response precess(Request request) throws Exception{
         currentRequest = request;
-        httpResponse = httpClient.execute(RequestGenerator.build(request).build(), httpContext);
+        httpResponse = httpClient.execute(HttpRequestGenerator.build(request).build(), httpContext);
         return ResponseGenerator.build(httpResponse,currentRequest);
     }
     

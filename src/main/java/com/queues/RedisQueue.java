@@ -13,7 +13,14 @@ import redis.clients.jedis.JedisPoolConfig;
 
 import java.util.List;
 
-
+/**
+ * 
+ * @ClassName RedisQueue
+ * @Description TODO 用于存储待爬取的图片url
+ * @author TURUI
+ * @Date 2016年12月7日 上午9:42:27
+ * @version 1.0.0
+ */
 public class RedisQueue {
 	private String host = "127.0.0.1";
 	private int port = 6379;
