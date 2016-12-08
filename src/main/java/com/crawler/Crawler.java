@@ -5,6 +5,7 @@ import org.apache.http.client.CookieStore;
 import org.apache.http.impl.client.BasicCookieStore;
 
 import com.queues.RedisQueue;
+import com.queues.RequestProducer;
 
 public class Crawler {
 
@@ -33,6 +34,8 @@ public class Crawler {
 
     private Crawler() {
         queue = new RedisQueue();
+        Thread seedThread = new Thread(RequestProducer.getInstance());
+        seedThread.start();
     }
 
     public static Crawler getInstance() {

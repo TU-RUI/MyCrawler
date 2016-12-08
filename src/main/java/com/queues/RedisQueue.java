@@ -25,7 +25,7 @@ public class RedisQueue {
 	private String host = "127.0.0.1";
 	private int port = 6379;
 	private String password = "";
-	private String quueName = "pixiv:pic:url:";
+	private String quueName = "pixiv:url:";
 	private JedisPool wpool = null;
 	private Logger logger = LoggerFactory.getLogger(getClass());
 

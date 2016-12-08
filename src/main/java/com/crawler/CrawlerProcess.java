@@ -8,12 +8,10 @@ import com.queues.RedisQueue;
 import com.queues.RequestProducer;
 
 public class CrawlerProcess implements Runnable{
-    private Crawler crawler;
     private Handler handler;
     private RedisQueue queue;
     
     public CrawlerProcess(Handler handler , Crawler crawler){
-        this.crawler = crawler;
         this.handler = handler;
         queue = crawler.getQueue();
     }
@@ -24,16 +22,24 @@ public class CrawlerProcess implements Runnable{
         while(true){
             Request request = null;
             try {
-                request = RequestProducer.getInstance().getRequest();
+                request = queue.bPop();
+                handler.before(request);
                 if(request == null){
                     continue;
                 }
                 if(request.getCurReqCount() >= request.getMaxReqCount()){
                     continue;
                 }
-                handler.before(request);
                 HttpDownLoader downLoader = new HttpDownLoader();
                 Response response = downLoader.precess(request);
+                if(response == null){
+                    if(request.getCurReqCount() < request.getMaxReqCount()){
+                        request.setCurReqCount(request.getCurReqCount()+1);
+                        queue.push(request);
+                    }
+                }
+                
+                
                 handler.after(response);
             } catch (Exception e) {
                 // TODO: handle exception

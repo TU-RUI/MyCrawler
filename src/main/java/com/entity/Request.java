@@ -14,6 +14,8 @@ public class Request implements Serializable{;
 	private static final long serialVersionUID = 875298819695944492L;
 	//请求的url
     private String url;
+    //referer
+    private String referer;
     //所用的方法
     private HttpMethod httpMethod;
     //请求需要的参数
@@ -23,8 +25,9 @@ public class Request implements Serializable{;
     //该请求最大重试次数
     private int maxReqCount;
     //该请求当前已重试次数
-    private int curReqCount;
-    
+    private int curReqCount = 0;
+    //URL类型
+    private URLType urlType;
     
     public String getUrl() {
         return url;
@@ -94,5 +97,25 @@ public class Request implements Serializable{;
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+
+    public URLType getUrlType() {
+        return urlType;
+    }
+
+
+    public void setUrlType(URLType urlType) {
+        this.urlType = urlType;
+    }
+
+
+    public String getReferer() {
+        return referer;
+    }
+
+
+    public void setReferer(String referer) {
+        this.referer = referer;
     }
 }

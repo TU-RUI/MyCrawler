@@ -13,25 +13,14 @@ import cn.wanghaomiao.seimi.struct.BodyType;
 
 public class Response implements Serializable {
 
-	
-	private static final long serialVersionUID = 2792228141564580864L;
-	private BodyType bodyType;
+    private static final long serialVersionUID = 2792228141564580864L;
+    private BodyType bodyType;
+    private String url;
     private Request request;
     private String charset;
-    private String referer;
     private byte[] data;
     private String content;
-    /**
-     * 这个主要用于存储上游传递的一些自定义数据
-     */
-    private Map<String, String> meta;
-    private String url;
-    private Map<String, String> params;
-    /**
-     * 网页内容真实源地址
-     */
     private String realUrl;
-
 
     public byte[] getData() {
         return data;
@@ -65,28 +54,12 @@ public class Response implements Serializable {
         this.content = content;
     }
 
-    public Map<String, String> getMeta() {
-        return meta;
-    }
-
-    public void setMeta(Map<String, String> meta) {
-        this.meta = meta;
-    }
-
     public String getUrl() {
         return url;
     }
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public Map<String, String> getParams() {
-        return params;
-    }
-
-    public void setParams(Map<String, String> params) {
-        this.params = params;
     }
 
     public Request getRequest() {
@@ -97,28 +70,10 @@ public class Response implements Serializable {
         this.request = request;
     }
 
-    public String getReferer() {
-        return referer;
-    }
-
-    public void setReferer(String referer) {
-        this.referer = referer;
-    }
-
-    public String getRealUrl() {
-        return realUrl;
-    }
-
-    public void setRealUrl(String realUrl) {
-        this.realUrl = realUrl;
-    }
-
     public void saveTo(File targetFile) throws Exception {
 
-        try (
-                FileOutputStream fileOutputStream = new FileOutputStream(targetFile);
-                FileChannel fo = fileOutputStream.getChannel();
-        ) {
+        try (FileOutputStream fileOutputStream = new FileOutputStream(targetFile);
+                FileChannel fo = fileOutputStream.getChannel();) {
             File pf = targetFile.getParentFile();
             if (!pf.exists()) {
                 pf.mkdirs();
@@ -132,13 +87,17 @@ public class Response implements Serializable {
             throw new Exception(e);
         }
     }
-	
-	
-	
-	
-	
+
     @Override
     public String toString() {
         return ToStringBuilder.reflectionToString(this);
+    }
+
+    public String getRealUrl() {
+        return realUrl;
+    }
+
+    public void setRealUrl(String realUrl) {
+        this.realUrl = realUrl;
     }
 }

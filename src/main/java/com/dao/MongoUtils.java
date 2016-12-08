@@ -66,7 +66,7 @@ public class MongoUtils {
         picCollection = null;
     }
     
-    //添加Pic
+    //添加Pic信息
     public boolean addPicEntity(PicInfoContent entity){
         try {
             DBObject object = morphia.toDBObject(entity);
