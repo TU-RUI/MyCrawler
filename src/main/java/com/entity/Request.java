@@ -21,7 +21,7 @@ public class Request implements Serializable{;
     //请求需要的参数
     private Map<String,String> params;
     //请求提交的表单
-    private List<NameValuePair> pair;
+    private Map<String,String> pair;
     //该请求最大重试次数
     private int maxReqCount;
     //该请求当前已重试次数
@@ -59,12 +59,12 @@ public class Request implements Serializable{;
     }
 
 
-    public List<NameValuePair> getPair() {
+    public Map<String,String> getPair() {
         return pair;
     }
 
 
-    public void setPair(List<NameValuePair> pair) {
+    public void setPair(Map<String,String> pair) {
         this.pair = pair;
     }
 

@@ -5,21 +5,26 @@ import java.io.FileOutputStream;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-import java.util.Map;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import cn.wanghaomiao.seimi.struct.BodyType;
 
 public class Response implements Serializable {
 
     private static final long serialVersionUID = 2792228141564580864L;
+    //响应类型
     private BodyType bodyType;
+    //原始地址
     private String url;
+    //响应
     private Request request;
+    //编码类型
     private String charset;
+    //字节流数据
     private byte[] data;
+    //文本数据
     private String content;
+    //真实请求地址(包括Query String)
     private String realUrl;
 
     public byte[] getData() {

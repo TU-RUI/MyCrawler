@@ -8,8 +8,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
 import org.apache.http.util.EntityUtils;
 
-import cn.wanghaomiao.seimi.struct.BodyType;
 
+
+import com.entity.BodyType;
 import com.entity.Request;
 import com.entity.Response;
 
