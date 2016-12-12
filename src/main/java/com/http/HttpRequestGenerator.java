@@ -12,12 +12,14 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.message.BasicNameValuePair;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.crawler.Crawler;
 import com.entity.Request;
 
 public class HttpRequestGenerator {
-
+	private static Logger logger = LoggerFactory.getLogger(HttpRequestGenerator.class);
     //
     public static RequestBuilder build(Request request) {
         RequestBuilder requestBuilder = null;
@@ -39,7 +41,7 @@ public class HttpRequestGenerator {
                     }
                 } catch (UnsupportedEncodingException e) {
                     // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    logger.error(e.getMessage());
                 }
             }
         } else {

@@ -40,7 +40,7 @@ public class Crawler {
 
     public static Crawler getInstance() {
         if (crawler == null) {
-            synchronized (crawler) {
+            synchronized (Crawler.class) {
                 if (crawler == null) {
                     crawler = new Crawler();
                 }

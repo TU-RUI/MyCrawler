@@ -1,13 +1,18 @@
 package com.crawler;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.entity.Request;
 import com.entity.Response;
 import com.handler.Handler;
 import com.http.HttpDownLoader;
+import com.okhttp.OkHttpDownloader;
 import com.queues.RedisQueue;
 import com.queues.RequestProducer;
 
 public class CrawlerProcess implements Runnable{
+	private static Logger logger = LoggerFactory.getLogger(CrawlerProcess.class);
     private Handler handler;
     private RedisQueue queue;
     
@@ -27,22 +32,22 @@ public class CrawlerProcess implements Runnable{
                 if(request == null){
                     continue;
                 }
+                
                 if(request.getCurReqCount() >= request.getMaxReqCount()){
                     continue;
                 }
-                HttpDownLoader downLoader = new HttpDownLoader();
-                Response response = downLoader.precess(request);
+                OkHttpDownloader OkdownLoader = new OkHttpDownloader();
+                Response response = OkdownLoader.process(request);
                 if(response == null){
                     if(request.getCurReqCount() < request.getMaxReqCount()){
                         request.setCurReqCount(request.getCurReqCount()+1);
                         queue.push(request);
                     }
                 }
-                
-                
                 handler.after(response);
             } catch (Exception e) {
                 // TODO: handle exception
+            	 logger.error(e.getMessage());
             }
         }
     }

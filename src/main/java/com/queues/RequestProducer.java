@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.crawler.Crawler;
 import com.entity.Request;
 import com.entity.URLType;
@@ -11,6 +14,7 @@ import com.http.HttpMethod;
 import com.utils.ConfigUtils;
 
 public class RequestProducer implements Runnable {
+	private static Logger logger = LoggerFactory.getLogger(RequestProducer.class);
     private static final int MAX_LENGTH = 100;
     private static RequestProducer instance = null;
     private static int count = 1;
@@ -23,14 +27,14 @@ public class RequestProducer implements Runnable {
     private RequestProducer() {
         ConfigUtils cu = new ConfigUtils();
         String s = cu.readString("id");
-        if (s != null && s.equals("")) {
+        if (s != null && !s.equals("")) {
             count = Integer.valueOf(s);
         }
     };
 
     public static RequestProducer getInstance() {
         if (instance == null) {
-            synchronized (instance) {
+            synchronized (RequestProducer.class) {
                 if (instance == null) {
                     instance = new RequestProducer();
                 }
@@ -47,13 +51,14 @@ public class RequestProducer implements Runnable {
             if (Crawler.getInstance().getQueue().len() < MAX_LENGTH / 2) {
                 for (int i = 0; i < MAX_LENGTH / 2; i++) {
                     queue.push(buildUserInfoRequest(count++));
+                    System.out.println(buildUserInfoRequest(count++).getRealUrl());
                 }
             } else {
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
-                    e.printStackTrace();
+                    logger.error(e.getMessage());
                 }
             }
 
