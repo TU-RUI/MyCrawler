@@ -32,7 +32,7 @@ public class CookieManager implements CookieJar {
 
     public static CookieManager getInstance() {
         if (cm == null) {
-            synchronized (cm) {
+            synchronized (CookieManager.class) {
                 if (cm == null) {
                     cm = new CookieManager();
                 }

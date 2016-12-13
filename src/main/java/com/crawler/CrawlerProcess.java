@@ -6,13 +6,11 @@ import org.slf4j.LoggerFactory;
 import com.entity.Request;
 import com.entity.Response;
 import com.handler.Handler;
-import com.http.HttpDownLoader;
 import com.okhttp.OkHttpDownloader;
 import com.queues.RedisQueue;
-import com.queues.RequestProducer;
 
 public class CrawlerProcess implements Runnable{
-	private static Logger logger = LoggerFactory.getLogger(CrawlerProcess.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(CrawlerProcess.class);
     private Handler handler;
     private RedisQueue queue;
     
@@ -26,29 +24,34 @@ public class CrawlerProcess implements Runnable{
         // TODO Auto-generated method stub
         while(true){
             Request request = null;
-            try {
                 request = queue.bPop();
-                handler.before(request);
                 if(request == null){
                     continue;
                 }
                 
+                handler.before(request);
+                LOGGER.info("消费url:{}",request.getRealUrl());
                 if(request.getCurReqCount() >= request.getMaxReqCount()){
                     continue;
                 }
                 OkHttpDownloader OkdownLoader = new OkHttpDownloader();
-                Response response = OkdownLoader.process(request);
+                Response response = null;
+                try {
+                    response = OkdownLoader.process(request);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
                 if(response == null){
                     if(request.getCurReqCount() < request.getMaxReqCount()){
                         request.setCurReqCount(request.getCurReqCount()+1);
                         queue.push(request);
                     }
+                    LOGGER.info("响应为空,重新加入队列:{}",request.getRealUrl());
+                }else{
+                    LOGGER.info("response:{},content:{}",response.getRealUrl(),response.getContent());
                 }
                 handler.after(response);
-            } catch (Exception e) {
-                // TODO: handle exception
-            	 logger.error(e.getMessage());
-            }
         }
     }
 

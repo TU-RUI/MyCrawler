@@ -14,7 +14,7 @@ import com.http.HttpMethod;
 import com.utils.ConfigUtils;
 
 public class RequestProducer implements Runnable {
-	private static Logger logger = LoggerFactory.getLogger(RequestProducer.class);
+	private static Logger LOGGER = LoggerFactory.getLogger(RequestProducer.class);
     private static final int MAX_LENGTH = 100;
     private static RequestProducer instance = null;
     private static int count = 1;
@@ -51,14 +51,14 @@ public class RequestProducer implements Runnable {
             if (Crawler.getInstance().getQueue().len() < MAX_LENGTH / 2) {
                 for (int i = 0; i < MAX_LENGTH / 2; i++) {
                     queue.push(buildUserInfoRequest(count++));
-                    System.out.println(buildUserInfoRequest(count++).getRealUrl());
+                    LOGGER.info("生产url:{}",buildUserInfoRequest(count-1).getRealUrl());
                 }
             } else {
                 try {
                     Thread.sleep(3000);
                 } catch (InterruptedException e) {
                     // TODO Auto-generated catch block
-                    logger.error(e.getMessage());
+                    LOGGER.error(e.getMessage());
                 }
             }
 
