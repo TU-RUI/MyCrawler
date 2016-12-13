@@ -12,7 +12,7 @@ public class Crawler {
     private static Crawler crawler = null;
     private static RedisQueue queue;
     private CookieStore cookieStore = new BasicCookieStore();
-    private String[] defUAs = new String[] {
+    private static String[] defUAs = new String[] {
             "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.31 (KHTML, like Gecko) Chrome/26.0.1410.43 Safari/537.31",
             "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1312.60 Safari/537.17",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_2) AppleWebKit/537.17 (KHTML, like Gecko) Chrome/24.0.1309.0 Safari/537.17",
@@ -34,8 +34,8 @@ public class Crawler {
 
     private Crawler() {
         queue = new RedisQueue();
-        Thread seedThread = new Thread(RequestProducer.getInstance());
-        seedThread.start();
+//        Thread seedThread = new Thread(RequestProducer.getInstance());
+//        seedThread.start();
     }
 
     public static Crawler getInstance() {
@@ -49,7 +49,7 @@ public class Crawler {
         return crawler;
     }
 
-    public String getUserAgent() {
+    public static String getUserAgent() {
         int index = RandomUtils.nextInt(0, defUAs.length);
         return defUAs[index];
     }

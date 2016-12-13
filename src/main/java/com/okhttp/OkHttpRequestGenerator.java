@@ -13,10 +13,12 @@ public class OkHttpRequestGenerator {
     public static okhttp3.Request.Builder build(Request request) {
         okhttp3.Request.Builder requestBuilder = new okhttp3.Request.Builder();
         requestBuilder.url(request.getUrl());
-        requestBuilder.header("User-Agent", Crawler.getInstance().getUserAgent())
+        requestBuilder.header("User-Agent", Crawler.getUserAgent())
                 .header("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8")
-                .header("Referer",request.getReferer())
                 .header("Accept-Language", "zh-CN,zh;q=0.8,en;q=0.6");
+        if(request.getReferer() != null){
+            requestBuilder.header("Referer",request.getReferer());
+        }
         if (HttpMethod.POST.equals(request.getHttpMethod())) {
             FormBody.Builder formBodyBuilder = new FormBody.Builder();
             if (request.getPair() != null) {

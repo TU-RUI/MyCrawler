@@ -31,7 +31,7 @@ public class RedisQueue {
     private Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     //初始化redis连接
-    static {
+    public static void connect() {
         JedisPoolConfig config = new JedisPoolConfig();
         config.setMaxTotal(500);
         config.setMaxIdle(200);
@@ -44,7 +44,7 @@ public class RedisQueue {
         }
     }
     
-    public void refresh() {
+    public void destroy() {
         if (wpool != null) {
             wpool.destroy();
             wpool = null;

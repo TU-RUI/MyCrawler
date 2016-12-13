@@ -25,7 +25,7 @@ public class Request implements Serializable {
 	// 请求提交的表单
 	private Map<String, String> pair;
 	// 该请求最大重试次数
-	private int maxReqCount;
+	private int maxReqCount = 3;
 	// 该请求当前已重试次数
 	private int curReqCount = 0;
 	// URL类型
