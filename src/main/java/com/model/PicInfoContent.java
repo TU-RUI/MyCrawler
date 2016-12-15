@@ -187,6 +187,10 @@ public class PicInfoContent {
         this.url = url;
     }
 
+    public PicInfoContent() {
+        // TODO Auto-generated constructor stub
+    }
+
 	
 	
 }

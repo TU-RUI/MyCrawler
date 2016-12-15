@@ -104,7 +104,7 @@ public class RequestProducer implements Runnable {
         request.setUrl(USER_WORKS_URL);
         request.setHttpMethod(HttpMethod.GET);
         request.setMaxReqCount(3);
-        request.setUrlType(URLType.AUTHOR_INFO_PAGE);
+        request.setUrlType(URLType.AUTHOR_WORKS_PAGE);
         request.setReferer(USER_INFO_URL+"?id="+id);
         HashMap<String, String> map = new HashMap<String, String>();
         map.put("id", String.valueOf(id));

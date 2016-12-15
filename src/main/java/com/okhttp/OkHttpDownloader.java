@@ -1,14 +1,10 @@
 package com.okhttp;
 
-import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.ParseException;
-import org.apache.http.util.EntityUtils;
-
 import cn.wanghaomiao.seimi.utils.StrFormatUtil;
 import cn.wanghaomiao.xpath.exception.XpathSyntaxErrorException;
 import cn.wanghaomiao.xpath.model.JXDocument;
@@ -16,9 +12,6 @@ import cn.wanghaomiao.xpath.model.JXDocument;
 import com.entity.BodyType;
 import com.entity.Request;
 import com.entity.Response;
-import com.http.HttpRequestGenerator;
-import com.http.ResponseGenerator;
-
 import okhttp3.OkHttpClient;
 import okhttp3.ResponseBody;
 
@@ -31,6 +24,9 @@ public class OkHttpDownloader {
     private okhttp3.Response lastResponse;
     
     public Response process(Request request) throws Exception {
+        if(request == null){
+            return null;
+        }
         currentRequest = request;
         OkHttpClient.Builder clientbuilder = OkHttpClientManager.getBuilder();
         clientbuilder.cookieJar(CookieManager.getInstance());
@@ -38,6 +34,12 @@ public class OkHttpDownloader {
         okHttpClient = clientbuilder.build();
         okhttp3.Request.Builder requestBuilder = OkHttpRequestGenerator.build(request);
         okhttp3.Response response = okHttpClient.newCall(requestBuilder.build()).execute();
+        if(!response.isSuccessful()){
+            return null;
+        }
+        if(response.isRedirect()){
+            process(buildRedirectRequest(response,request));
+        }
         return responseBuild(response,currentRequest);
     }
     
@@ -99,7 +101,31 @@ public class OkHttpDownloader {
         return response;
     }
     
+    /**
+     * 
+     * @Description 302跳转
+     * @param response
+     * @param Request
+     * @return
+     */
+    private Request buildRedirectRequest(okhttp3.Response response,Request Request){
+        String url = response.header("Location");
+        if(!StringUtils.isBlank(url)){
+            request.setUrl(url);
+            return request;
+        }
+        return null; 
+    }
     
+    
+    
+    /**
+     * 
+     * @Description 检测字符编码
+     * @param content
+     * @return
+     * @throws XpathSyntaxErrorException
+     */
     private String renderRealCharset(String content) throws XpathSyntaxErrorException {
         String charset;
         JXDocument doc = new JXDocument(content);

@@ -48,8 +48,6 @@ public class CrawlerProcess implements Runnable{
                         queue.push(request);
                     }
                     LOGGER.info("响应为空,重新加入队列:{}",request.getRealUrl());
-                }else{
-                    LOGGER.info("response:{},content:{}",response.getRealUrl(),response.getContent());
                 }
                 handler.after(response);
         }

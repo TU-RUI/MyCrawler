@@ -93,7 +93,6 @@ public class RedisQueue {
             } finally {
                 if (jedis != null) {
                     returnJedis(wpool,jedis);
-                    
                 }
             }
         }

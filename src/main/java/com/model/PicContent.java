@@ -106,6 +106,9 @@ public class PicContent {
         this.data = data;
         this.type = type;
     }
+    public PicContent() {
+        // TODO Auto-generated constructor stub
+    }
     private boolean isValidate(){
         if(StringUtils.isBlank(year)||StringUtils.isBlank(month)||StringUtils.isBlank(day) || id == 0 || data == null){
             return false;

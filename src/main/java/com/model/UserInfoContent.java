@@ -96,5 +96,7 @@ public class UserInfoContent {
         this.address = address;
         this.pictures = pictures;
     }
+    public UserInfoContent() {
+    }
 	
 }
