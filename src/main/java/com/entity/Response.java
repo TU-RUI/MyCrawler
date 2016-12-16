@@ -16,7 +16,9 @@ public class Response implements Serializable {
     private BodyType bodyType;
     //原始地址
     private String url;
-    //响应
+    
+    private int StatusCode;
+    //原始请求
     private Request request;
     //编码类型
     private String charset;
@@ -104,5 +106,13 @@ public class Response implements Serializable {
 
     public void setRealUrl(String realUrl) {
         this.realUrl = realUrl;
+    }
+
+    public int getStatusCode() {
+        return StatusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        StatusCode = statusCode;
     }
 }

@@ -48,8 +48,24 @@ public class CrawlerProcess implements Runnable{
                         queue.push(request);
                     }
                     LOGGER.info("响应为空,重新加入队列:{}",request.getRealUrl());
+                    continue;
                 }
-                handler.after(response);
+                int StatusCode = response.getStatusCode();
+                //正常状态码
+                if(StatusCode >=200 && StatusCode < 300){
+                    handler.after(response);                    
+                }else if(StatusCode == 401){
+                    LoginProcess.login();
+                }else{
+                    if(request.getCurReqCount() < request.getMaxReqCount()){
+                        request.setCurReqCount(request.getCurReqCount()+1);
+                        queue.push(request);
+                    }
+                    LOGGER.info("响应为空,重新加入队列:{}",request.getRealUrl());
+                    continue;
+                }
+                
+                
         }
     }
 

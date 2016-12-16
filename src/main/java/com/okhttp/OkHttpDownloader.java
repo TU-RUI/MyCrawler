@@ -38,7 +38,7 @@ public class OkHttpDownloader {
             return null;
         }
         if(response.isRedirect()){
-            process(buildRedirectRequest(response,request));
+             return process(buildRedirectRequest(response,request));
         }
         return responseBuild(response,currentRequest);
     }
@@ -69,6 +69,7 @@ public class OkHttpDownloader {
             }
         }
         response.setUrl(realUrl.substring(0, realUrl.length() - 1));
+        response.setStatusCode(resp.code());
         
         ResponseBody okResponseBody = resp.body();
         if (okResponseBody!=null){

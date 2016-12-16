@@ -124,7 +124,8 @@ public class Request implements Serializable {
 				sb.append("&");
 			}
 		}
-		return sb.substring(0, sb.length()-1).toString();
+		realUrl = sb.substring(0, sb.length()-1).toString();
+		return realUrl;
 	}
 
 	public void setRealUrl(String realUrl) {

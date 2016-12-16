@@ -62,6 +62,7 @@ public class RedisQueue {
     }
     
 
+    //弹出
     public Request bPop() {
         Jedis jedis = null;
         Request request = null;
@@ -81,6 +82,7 @@ public class RedisQueue {
         return request;
     }
 
+    //加入
     public boolean push(Request req) {
         Jedis jedis = null;
         boolean res = false;
